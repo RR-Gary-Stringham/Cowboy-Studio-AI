@@ -1,0 +1,7 @@
+{
+  "name": "Urban Cowboy Booking Experience",
+  "description": "An experiential boutique hotel booking engine tailored to building narratives, soaking suites, and curated visual rate cards.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

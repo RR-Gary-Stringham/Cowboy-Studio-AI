@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'BrothersOT';
+  src: url('/fonts/BrothersOT-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BrothersOT';
+  src: url('/fonts/BrothersOT-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DesertRain';
+  src: url('/fonts/DesertRain-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DesertRain';
+  src: url('/fonts/DesertRain-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DesertRain';
+  src: url('/fonts/DesertRain-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CedarvilleCursive';
+  src: url('/fonts/Cedarville-Cursive.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  body {
+    font-family: 'Uchen', Georgia, serif;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'BrothersOT', 'Cinzel', 'Quattrocento', serif;
+  }
+  .font-brothers {
+    font-family: 'BrothersOT', 'Cinzel', serif;
+  }
+  .font-desert {
+    font-family: 'DesertRain', 'Newsreader', serif;
+  }
+  .font-western {
+    font-family: 'BrothersOT', 'Cinzel', 'Rye', serif;
+  }
+  .font-woodblock {
+    font-family: 'Oswald', 'League Spartan', sans-serif;
+  }
+  .font-quattrocento {
+    font-family: 'Quattrocento', Georgia, serif;
+  }
+  .font-arvo {
+    font-family: 'Arvo', serif;
+  }
+  .font-spartan {
+    font-family: 'League Spartan', sans-serif;
+  }
+  .font-dmsans {
+    font-family: 'DM Sans', sans-serif;
+  }
+  .font-uchen {
+    font-family: 'Uchen', serif;
+  }
+  .font-cedarville {
+    font-family: 'CedarvilleCursive', 'Cedarville Cursive', cursive;
+  }
+  .font-script {
+    font-family: 'CedarvilleCursive', 'Cedarville Cursive', cursive;
+  }
+  .font-caveat {
+    font-family: 'Caveat', cursive, sans-serif;
+  }
+  .font-body {
+    font-family: 'Uchen', serif;
+  }
+  .font-editorial {
+    font-family: 'Uchen', serif;
+  }
+
+  /* Tactile Paper Texture (Handcrafted Linen / Deckle Paper) */
+  .texture-linen {
+    background-color: #EBE8E0;
+    background-image: radial-gradient(#4E332D 0.75px, transparent 0.75px), radial-gradient(#4E332D 0.75px, #EBE8E0 0.75px);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+    background-blend-mode: soft-light;
+  }
+
+  /* Woven Navajo / Aztec Diamond Textile Pattern */
+  .pattern-navajo {
+    background-color: #2C3325;
+    background-image: 
+      linear-gradient(45deg, rgba(200, 212, 196, 0.08) 25%, transparent 25%), 
+      linear-gradient(-45deg, rgba(200, 212, 196, 0.08) 25%, transparent 25%), 
+      linear-gradient(45deg, transparent 75%, rgba(200, 212, 196, 0.08) 75%), 
+      linear-gradient(-45deg, transparent 75%, rgba(200, 212, 196, 0.08) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  }
+
+  /* Stitched Leather / Tailored Felt Border */
+  .border-stitched {
+    border: 2px dashed rgba(78, 51, 45, 0.4);
+    outline: 1px solid rgba(78, 51, 45, 0.15);
+    outline-offset: 4px;
+  }
+
+  .border-stitched-light {
+    border: 2px dashed rgba(247, 231, 206, 0.5);
+    outline: 1px solid rgba(247, 231, 206, 0.2);
+    outline-offset: 4px;
+  }
+
+  /* Fine Crosshatch Stipple Texture */
+  .texture-crosshatch {
+    background-image: repeating-linear-gradient(45deg, rgba(52, 56, 51, 0.03) 0px, rgba(52, 56, 51, 0.03) 1px, transparent 0px, transparent 6px);
+  }
+
+  /* Vintage Bookplate Inset Shadow */
+  .box-bookplate {
+    box-shadow: inset 0 0 0 1px rgba(78, 51, 45, 0.2), inset 0 0 0 4px #FAF9F9, inset 0 0 0 5px rgba(78, 51, 45, 0.25);
+  }
+
+  .box-bookplate-dark {
+    box-shadow: inset 0 0 0 1px rgba(235, 232, 224, 0.2), inset 0 0 0 4px #1C2020, inset 0 0 0 5px rgba(235, 232, 224, 0.25);
+  }
+}
+
+/* Custom scrollbar for horizontal card scrolling */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
