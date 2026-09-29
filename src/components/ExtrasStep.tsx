@@ -28,7 +28,7 @@ export const ExtrasStep: React.FC<ExtrasStepProps> = ({
   const extrasTotal = calculateExtrasTotal();
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-10">
+    <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Navigation */}
       <button
         onClick={onBackToRates}

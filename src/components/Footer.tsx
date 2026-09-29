@@ -3,20 +3,14 @@ import React from 'react';
 export const Footer: React.FC = () => {
   return (
     <footer className="w-full bg-[#4E332D] text-[#EBE8E0] pt-14 pb-12 mt-20 border-t-4 border-[#343833]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 pb-10 border-b border-[#EBE8E0]/15 text-center md:text-left">
           <div>
-            <div className="flex flex-col items-center md:items-start">
-              <span className="font-editorial italic text-sm text-[#EBE8E0]/80">
-                Urban
-              </span>
-              <span className="font-display font-bold text-3xl tracking-[0.25em] text-[#EBE8E0] uppercase">
-                COWBOY
-              </span>
-            </div>
-            <p className="font-editorial italic text-xs text-[#EBE8E0]/70 mt-2">
-              "Arrive as Strangers. Leave as Friends."
-            </p>
+            <img
+              src="/assets/logos/urban-cowboy.svg"
+              alt="Urban Cowboy"
+              className="h-10 sm:h-12 w-auto object-contain mx-auto md:mx-0 select-none"
+            />
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-6 font-woodblock text-xs uppercase tracking-widest text-[#EBE8E0]/80">

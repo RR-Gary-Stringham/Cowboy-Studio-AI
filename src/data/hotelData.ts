@@ -65,19 +65,20 @@ export const ROOMS: RoomType[] = [
     isDogFriendly: true,
     ageRestricted21: true,
     soakType: 'copper-den',
-    soakHighlight: 'Double-slipper copper tub & built-in chaise den by the fire',
+    soakHighlight: 'Panoramic Mountain & Forest Vista',
     images: [
       ROOM_IMAGE_ASSETS.ALPINE_HEADBOARD,
       ROOM_IMAGE_ASSETS.ALPINE_BATHING_SUITE,
       ROOM_IMAGE_ASSETS.ALPINE_PENTHOUSE_COPPER_TUB
     ],
     features: [
-      'Hand-hammered Copper Clawfoot Tub',
+      'Copper Clawfoot Soaking Tub',
+      'Walk-in Rain Shower',
       'Built-in Reading Chaise Den',
       'Panoramic Mountain & Forest Vista',
       'Marshall Bluetooth Sound System',
-      'Custom Bar Cart with Craft Bitters',
-      'Cast Iron Radiator Heat & AC'
+      'Cast Iron Wood Stove',
+      'Pendleton Robes & Blankets',
     ],
     tags: ['21+', 'Dog-friendly', 'Copper Tub', 'Chaise Den']
   },
@@ -92,24 +93,24 @@ export const ROOMS: RoomType[] = [
     longDescription: "Reigning over the crest of Alpine, the Penthouse commands an unobstructed panoramic view across the valley canopy. Vaulted cathedral ceilings soar overhead with rough-sawn pine rafters. Soak in the copper clawfoot tub warmed by the glow of an authentic gas fireplace, then step onto your private cedar balcony for stargazing under crystal mountain skies.",
     basePrice: 320,
     squareFeet: 680,
-    bedType: 'Grand King Bed',
+    bedType: '1 King',
     maxGuests: 2,
-    isDogFriendly: true,
+    isDogFriendly: false,
     ageRestricted21: true,
     soakType: 'copper-tub-fireplace',
-    soakHighlight: 'Private timber balcony & copper tub facing the fireplace',
+    soakHighlight: 'Private High-Valley Cedar Balcony',
     images: [
       ROOM_IMAGE_ASSETS.ALPINE_PENTHOUSE_COPPER_TUB,
       ROOM_IMAGE_ASSETS.ALPINE_HEADBOARD,
       ROOM_IMAGE_ASSETS.ALPINE_BATHING_SUITE
     ],
     features: [
-      'Private High-Valley Cedar Balcony',
-      'Gas Hearth Fireplace',
       'Copper Clawfoot Soaking Tub',
+      'Walk-in Rain Shower',
+      'Private High-Valley Cedar Balcony',
+      'River Stone Hearth Fireplace',
       'Dramatic Cathedral Timber Ceilings',
-      'En-suite Pour-over Coffee Bar',
-      'Custom Wool Robes & Leather Slippers'
+      'Pendleton Robes & Blankets'
     ],
     tags: ['21+', 'Dog-friendly', 'Fireplace', 'Balcony', 'Penthouse']
   },
@@ -124,24 +125,24 @@ export const ROOMS: RoomType[] = [
     longDescription: 'Perched along the tree line, the Alpine Bathing Suite is designed around the ritual of soaking. A deep cast-iron clawfoot tub sits squarely before a floor-to-ceiling glass panel looking into the Catskill birch and hemlocks. Features custom Pendleton wool accents, a King custom mattress, rain shower, and curated vinyl turntable with vintage records.',
     basePrice: 195,
     squareFeet: 420,
-    bedType: 'King Custom Bed',
+    bedType: '1 King',
     maxGuests: 2,
-    isDogFriendly: true,
+    isDogFriendly: false,
     ageRestricted21: true,
     soakType: 'clawfoot-window',
-    soakHighlight: 'Freestanding clawfoot tub framed by private forest picture window',
+    soakHighlight: 'Private Deck',
     images: [
       ROOM_IMAGE_ASSETS.ALPINE_BATHING_SUITE,
       ROOM_IMAGE_ASSETS.ALPINE_HEADBOARD,
       ROOM_IMAGE_ASSETS.ALPINE_PENTHOUSE_COPPER_TUB
     ],
     features: [
-      'Freestanding Clawfoot Tub by Window',
-      'Cast-iron Potbelly Stove',
-      'Private Forest Deck & Heated Bathroom Floors',
-      'Hand-printed Wallpaper & Walk-in Shower',
-      'Vinyl Record Player & Curated LP Selection',
-      'Handcrafted Hudson Valley Toiletries'
+      'Copper Clawfoot Soaking Tub',
+      'Walk-in Rain Shower',
+      'Cast Iron Wood Stove',
+      'Private Deck',
+      'Marshall Bluetooth Sound System',
+      'Pendleton Robes & Blankets'
     ],
     tags: ['21+', 'Dog-friendly', 'Clawfoot Tub', 'Cast-iron Stove']
   },
@@ -156,24 +157,26 @@ export const ROOMS: RoomType[] = [
     longDescription: 'The quintessential Walden experience. Walden Forest Bathing Suite dissolves the border between indoor luxury and wild nature. Your private outdoor cedar deck houses a custom round cedar soaking tub, constantly steaming in the crisp mountain air. Complete with an open-air seasonal outdoor shower, plush terry robes, and woodland seclusion.',
     basePrice: 265,
     squareFeet: 460,
-    bedType: 'King Custom Bed',
+    bedType: '1 King',
     maxGuests: 2,
-    isDogFriendly: true,
+    isDogFriendly: false,
     ageRestricted21: true,
     soakType: 'outdoor-cedar-tub',
-    soakHighlight: 'Handmade red cedar soaking tub & sunrise diamond window',
+    soakHighlight: 'Esopus Creek Access',
     images: [
       ROOM_IMAGE_ASSETS.WALDEN_FOREST_BATHING_SUITE,
       ROOM_IMAGE_ASSETS.WALDEN_SUNRISE_BATHING_SUITE,
       ROOM_IMAGE_ASSETS.ALPINE_BATHING_SUITE
     ],
     features: [
-      'Outdoor Handcrafted Cedar Soaking Tub',
-      'Diamond-shaped Sunrise Window',
-      'Two Vintage Leather Loungers',
-      'Cast-iron Potbelly Stove',
-      'Radiant Heated Bathroom Floors',
-      'Botanical Bath Salts Provided'
+      'Outdoor Cedar Soaking Tub',
+      'Letter-Writing Desk',
+      'Private Deck or Porch',
+      'Leather Loungers',
+      'Cast Iron Wood Stove',
+      'Radiant Heated Floors',
+      'Pendleton Robes & Blankets',
+      'Esopus Creek Access',
     ],
     tags: ['21+', 'Dog-friendly', 'Outdoor Cedar Tub', 'Sunrise Views']
   },
@@ -188,24 +191,26 @@ export const ROOMS: RoomType[] = [
     longDescription: "Rooted deeply in the hemlocks, Walden King captures the contemplative spirit of Henry David Thoreau with a rugged, tactile Cowboy finish. Step out with freshly brewed Chemex onto your secluded forest porch. Inside, reclaimed timber walls, a custom writing desk, and artisanal ironwork create a warm, grounding haven.",
     basePrice: 175,
     squareFeet: 360,
-    bedType: 'King Custom Bed',
+    bedType: '1 King',
     maxGuests: 2,
-    isDogFriendly: true,
+    isDogFriendly: false,
     ageRestricted21: true,
     soakType: 'clawfoot-window',
-    soakHighlight: 'Secluded woods porch & letter-writing desk',
+    soakHighlight: 'Esopus Creek Access',
     images: [
       ROOM_IMAGE_ASSETS.WALDEN_SUNRISE_BATHING_SUITE,
       ROOM_IMAGE_ASSETS.WALDEN_FOREST_BATHING_SUITE,
       ROOM_IMAGE_ASSETS.ALPINE_HEADBOARD
     ],
     features: [
-      'Private Covered Deck into the Woods',
-      'Solid Reclaimed Timber Writing Desk',
-      'Stone Rainfall Walk-in Shower',
-      'Chemex Pour-Over Coffee Station',
-      'Custom Wool Throws & Linens',
-      'Quiet Wilderness Wing Location'
+      'Outdoor Cedar Soaking Tub',
+      'Letter-Writing Desk',
+      'Private Deck or Porch',
+      'Leather Loungers',
+      'Cast Iron Wood Stove',
+      'Radiant Heated Floors',       
+      'Pendleton Robes & Blankets',
+      'Esopus Creek Access'
     ],
     tags: ['21+', 'Dog-friendly', 'Cabin Retreat', 'Writing Desk']
   },
@@ -215,31 +220,33 @@ export const ROOMS: RoomType[] = [
     buildingName: 'The Lodge',
     name: 'Lodge Penthouse',
     eyebrow: 'THE HONEYMOON SUITE. OFFICIALLY UNOFFICIAL.',
-    tagline: 'Handcrafted black-willow headboard, copper clawfoot tub, private deck and wet bar',
+    tagline: 'Handcrafted exposed branch headboard, copper clawfoot tub, private deck and wet bar',
     description: "The biggest single room in the Lodge gives you a bedroom, living room, private deck and some of the property's most dramatic views. The handcrafted black-willow headboard turns the bedroom into its own little forest. The copper clawfoot tub makes a strong argument for staying there. Your private living room and wet bar handle the rest.",
     longDescription: "Spanning the crown of The Lodge, this is the romantic pinnacle of Urban Cowboy. Exposed 19th-century pine joists frame a king bed anchored by a wild sculpted black-willow headboard. Step through french doors to your private sunset deck, or draw a warm bath in the double copper tub with a cocktail poured from your wet bar.",
     basePrice: 345,
     squareFeet: 720,
-    bedType: 'Grand King Bed with Black-Willow Headboard',
+    bedType: '1 King',
     maxGuests: 2,
     isDogFriendly: true,
     ageRestricted21: false,
     soakType: 'copper-tub-fireplace',
-    soakHighlight: 'Double copper clawfoot tub & private scenic valley deck',
+    soakHighlight: 'Seperate Living Room',
     images: [
       ROOM_IMAGE_ASSETS.LODGE_PENTHOUSE_BEDROOM,
       ROOM_IMAGE_ASSETS.LODGE_PENTHOUSE_LIVING_ROOM,
       ROOM_IMAGE_ASSETS.ALPINE_PENTHOUSE_COPPER_TUB
     ],
     features: [
-      'Handcrafted Black-Willow Headboard',
-      'Copper Clawfoot Soaking Tub',
-      'Private Mountain Valley Deck',
-      'Dedicated Living Room & Custom Wet Bar',
-      'Cast-iron Hearth Fireplace',
-      'Custom Turkish Robes & Hi-Fi System'
+      'Copper Clawfoot Soaking Tub',  
+      'Walk-in Rain Shower',  
+      'Handcrafted Branch Headboard',
+      'Architectural Diamond Window',
+      'Wrap-Around Porch',
+      'Separate Living Room',
+      'Cast Iron Wood Stove',
+      'Pendleton Robes & Blankets'
     ],
-    tags: ['Family-friendly', 'Dog-friendly', 'Copper Tub', 'Wet Bar', 'Penthouse']
+    tags: ['Family-friendly', 'Dog-friendly', 'Wet Bar', 'Penthouse']
   },
   {
     id: 'lodge-three-bedroom',
@@ -252,24 +259,25 @@ export const ROOMS: RoomType[] = [
     longDescription: "The ultimate gathering retreat. Take over an entire wing of The Lodge with three separate private bedrooms joined by an authentic timber parlor. Gather around the stone hearth for board games, pour drinks at the wet bar, or sit on the wraparound veranda taking in the mountain breeze.",
     basePrice: 580,
     squareFeet: 1100,
-    bedType: '3 King Bedrooms + Shared Living Parlor',
+    bedType: '3 Kings',
     maxGuests: 6,
     isDogFriendly: true,
     ageRestricted21: false,
     soakType: 'clawfoot-window',
-    soakHighlight: 'Two clawfoot tubs, private wet bar & central stone fireplace',
+    soakHighlight: 'In-suite Wet Bar & Lounge',
     images: [
       ROOM_IMAGE_ASSETS.LODGE_PENTHOUSE_LIVING_ROOM,
       ROOM_IMAGE_ASSETS.LODGE_PENTHOUSE_BEDROOM,
       ROOM_IMAGE_ASSETS.ALPINE_HEADBOARD
     ],
     features: [
+      'Copper Clawfoot Soaking Tub',
+      'Walk-in Rain Shower',
       'Three Independent Private King Bedrooms',
-      'Expansive Timber Living Parlor with Fireplace',
-      'Full Wet Bar with Cocktail Provisions',
+      'River Stone Hearth Fireplace',
+      'In-suite Wet Bar & Lounge',
       'Private Wraparound Cedar Deck',
-      'Two Full Baths with Soaking Tubs',
-      'Perfect for Gatherings & Celebrations'
+      'Pendleton Robes & Blankets'
     ],
     tags: ['Family-friendly', 'Dog-friendly', 'Three Bedrooms', 'Fireplace', 'Gathering']
   },
@@ -284,26 +292,24 @@ export const ROOMS: RoomType[] = [
     longDescription: "Positioned directly on the second floor of the historic Lodge, this room puts you steps away from the buzz of the dining parlor and evening cocktails while providing a quiet timber sanctuary with heated bathroom floors, rainfall shower, and custom Pendleton wool blankets.",
     basePrice: 165,
     squareFeet: 340,
-    bedType: 'King Custom Bed',
+    bedType: '1 King',
     maxGuests: 2,
     isDogFriendly: true,
     ageRestricted21: false,
     soakType: 'clawfoot-window',
-    soakHighlight: 'Stone walk-in rainfall shower & easy dining room access',
+    soakHighlight: 'Private Balcony for Two',
     images: [
       ROOM_IMAGE_ASSETS.LODGE_PENTHOUSE_BEDROOM,
       ROOM_IMAGE_ASSETS.LODGE_PENTHOUSE_LIVING_ROOM,
       ROOM_IMAGE_ASSETS.ALPINE_BATHING_SUITE
     ],
     features: [
-      'Direct Access to Dining Parlor & Saloon',
-      'Stone Rainfall Walk-in Shower',
-      'Heated Moroccan Tile Bathroom Floors',
-      'Reclaimed White Pine Wood Cladding',
-      'Pendleton Wool Throws & Linens',
-      'Lodge Porch Access'
+      'Copper Clawfoot Soaking Tub',
+      'Walk-in Rain Shower',
+      'Private Balcony for Two',
+      'Pendleton Robes & Blankets'
     ],
-    tags: ['Family-friendly', 'Dog-friendly', 'Lodge Life', 'King Bed']
+    tags: ['Family-friendly', 'Dog-friendly', 'King Bed']
   }
 ];
 

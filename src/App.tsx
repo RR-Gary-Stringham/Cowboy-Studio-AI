@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { RideEasySoloPage } from './components/RideEasySoloPage';
 import { BookingStep, SearchCriteria, RoomType, RateOption, BookingState } from './types';
 import { ROOMS, BUILDINGS, RATE_OPTIONS } from './data/hotelData';
 import { Header } from './components/Header';
@@ -14,7 +15,28 @@ import { Footer } from './components/Footer';
 import { ArrowRight, Compass, Sparkles, Bath, Shield, Eye } from 'lucide-react';
 
 export default function App() {
-  const [currentStep, setCurrentStep] = useState<BookingStep>(2); // Start on Step 2 (Building & Room Experience) so user sees the core refined concept immediately!
+  const [viewMode, setViewMode] = useState<'solo-ride-easy' | 'full-app'>('full-app');
+
+  // If in solo mode, render strictly the blank page with RideEasy component centered
+  if (viewMode === 'solo-ride-easy') {
+    return (
+      <div className="relative">
+        <RideEasySoloPage />
+        {/* Discreet toggle button in bottom-right corner */}
+        <div className="fixed bottom-4 right-4 z-50">
+          <button
+            onClick={() => setViewMode('full-app')}
+            className="text-[11px] font-mono px-3 py-1.5 rounded-full bg-[#343833]/10 hover:bg-[#343833]/20 text-[#343833] transition-all cursor-pointer backdrop-blur-xs opacity-60 hover:opacity-100"
+          >
+            Switch to Full Booking Page
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const [rateVersion, setRateVersion] = useState<'v1' | 'v2'>('v2');
+  const [currentStep, setCurrentStep] = useState<BookingStep>(2);
   
   const [criteria, setCriteria] = useState<SearchCriteria>({
     property: 'Catskills',
@@ -89,6 +111,76 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  /**
+   * Fail-safe execution wrapper:
+   * Tries once, allows at most 1 retry, then reports error and halts.
+   */
+  const executeWithFailsafe = async <T,>(
+    actionName: string,
+    actionFn: () => Promise<T>
+  ): Promise<{ success: boolean; data?: T; error?: string }> => {
+    const maxAttempts = 2; // Try once + 1 retry
+    let lastError = '';
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      console.log(`[API Flow: ${actionName}] Attempt ${attempt} of ${maxAttempts} starting...`);
+      try {
+        const result = await actionFn();
+        console.log(`[API Flow: ${actionName}] Succeeded on attempt ${attempt}:`, result);
+        return { success: true, data: result };
+      } catch (err: any) {
+        lastError = err?.message || String(err);
+        console.warn(`[API Flow: ${actionName}] Attempt ${attempt} failed with error:`, lastError);
+
+        if (attempt < maxAttempts) {
+          console.log(`[API Flow: ${actionName}] Preparing 1 retry before reporting back...`);
+        }
+      }
+    }
+
+    console.error(`[API Flow: ${actionName}] Failsafe triggered: All ${maxAttempts} attempts failed. Stopping retries and awaiting instructions. Last error: ${lastError}`);
+    return { success: false, error: lastError };
+  };
+
+  /**
+   * handleGenerate: Handles generation requests with debug logging and failsafe retries
+   */
+  const handleGenerate = async (prompt?: string, options: Record<string, any> = {}) => {
+    console.log('[handleGenerate] Triggered with prompt:', prompt, 'options:', options);
+    return await executeWithFailsafe('handleGenerate', async () => {
+      // Stub/handler logic with validation
+      if (!prompt && Object.keys(options).length === 0) {
+        console.log('[handleGenerate] Generating default recommendations for current search criteria:', criteria);
+      }
+      return { status: 'completed', timestamp: new Date().toISOString(), criteria };
+    });
+  };
+
+  /**
+   * handleIterate: Handles iterative refinement requests with debug logging and failsafe retries
+   */
+  const handleIterate = async (iterationInput?: string, changes: Record<string, any> = {}) => {
+    console.log('[handleIterate] Triggered with iteration input:', iterationInput, 'changes:', changes);
+    return await executeWithFailsafe('handleIterate', async () => {
+      console.log('[handleIterate] Applying iteration modifications to current booking state');
+      return { status: 'iterated', timestamp: new Date().toISOString(), changes };
+    });
+  };
+
+  /**
+   * handleCritiqueSubmit: Handles critique submission with debug logging and failsafe retries
+   */
+  const handleCritiqueSubmit = async (critique: string, metadata: Record<string, any> = {}) => {
+    console.log('[handleCritiqueSubmit] Submitting critique:', critique, 'metadata:', metadata);
+    return await executeWithFailsafe('handleCritiqueSubmit', async () => {
+      if (!critique || critique.trim() === '') {
+        throw new Error('Critique text cannot be empty');
+      }
+      console.log('[handleCritiqueSubmit] Critique recorded successfully');
+      return { status: 'submitted', critique, timestamp: new Date().toISOString() };
+    });
+  };
+
   const bookingState: BookingState = {
     searchCriteria: criteria,
     currentStep,
@@ -112,7 +204,7 @@ export default function App() {
         {/* STEP 1: Availability Criteria / Landing */}
         {currentStep === 1 && (
           <div className="w-full py-12 md:py-16">
-            <div className="max-w-6xl mx-auto px-4 text-center mb-10">
+            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 text-center mb-10">
               <span className="font-woodblock text-xs uppercase tracking-widest text-[#9A5636] font-bold block mb-2">
                 CATSKILLS · BIG INDIAN, NY
               </span>
@@ -137,7 +229,7 @@ export default function App() {
             <PillarFeatures />
 
             {/* Quick Preview of Building Experiences */}
-            <div className="max-w-5xl mx-auto px-4 mt-8 pt-8 border-t border-[#D1C9BE]">
+            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-8 border-t border-[#D1C9BE]">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
                 <div>
                   <h3 className="font-display font-bold text-2xl uppercase text-[#221C18]">
@@ -212,6 +304,8 @@ export default function App() {
             onSelectRate={handleSelectRate}
             onChangeRoom={() => handleStepChange(2)}
             onOpenRoomDetails={(room) => setModalRoom(room)}
+            activeVersion={rateVersion}
+            onSelectVersion={setRateVersion}
           />
         )}
 
