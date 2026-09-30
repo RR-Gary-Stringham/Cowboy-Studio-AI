@@ -72,14 +72,14 @@ export const RateSelectionView: React.FC<RateSelectionViewProps> = ({
         : expandedRateId === RATE_CARD_KEYS[index];
 
       // Exact known width of the card when expanded vs unexpanded
-      const expectedWidth = isCardExpanded
+      const fullWidth = isCardExpanded
         ? (rateCardsVariant === 'compact' ? 991 : 944)
         : (rateCardsVariant === 'compact' ? 482 : 480);
 
       const containerWidth = container.clientWidth;
       const targetLeft = targetEl.offsetLeft;
-      // Center the card directly in the scroll container
-      const scrollTarget = targetLeft - (containerWidth / 2) + (expectedWidth / 2);
+      // Center the card smoothly in the scroll container viewport
+      const scrollTarget = targetLeft - (containerWidth / 2) + (fullWidth / 2);
 
       container.scrollTo({
         left: Math.max(0, scrollTarget),
@@ -90,7 +90,7 @@ export const RateSelectionView: React.FC<RateSelectionViewProps> = ({
     // Reset programmatic flag after smooth scroll settles
     scrollTimeoutRef.current = setTimeout(() => {
       isProgrammaticScrollRef.current = false;
-    }, 600);
+    }, 500);
   };
 
   // Center initial middle spotlight card (index 2) on mount
@@ -156,9 +156,6 @@ export const RateSelectionView: React.FC<RateSelectionViewProps> = ({
 
       if (closestIdx !== spotlightIndex && closestIdx >= 0 && closestIdx < 5) {
         setSpotlightIndex(closestIdx);
-        if (expandedRateId && expandedRateId !== RATE_CARD_KEYS[closestIdx]) {
-          setExpandedRateId(null);
-        }
       }
     });
   };
@@ -182,12 +179,10 @@ export const RateSelectionView: React.FC<RateSelectionViewProps> = ({
       // Close any other open card and expand this one
       setSpotlightIndex(index);
       setExpandedRateId(rateId);
-      // Immediately smooth scroll with expanded width
-      scrollToCard(index, true);
-      // Re-adjust after drawer animation completes
-      setTimeout(() => {
+      // Clean, single smooth scroll coordinated with expansion
+      requestAnimationFrame(() => {
         scrollToCard(index, true);
-      }, 520);
+      });
     }
   };
 
@@ -478,11 +473,13 @@ export const RateSelectionView: React.FC<RateSelectionViewProps> = ({
                   setExpandedRateId(null);
                 }
               }}
-              className="w-full flex flex-row items-start gap-8 sm:gap-10 overflow-x-auto pt-8 pb-36 px-12 sm:px-24 snap-x snap-proximity scroll-smooth"
+              className="w-full flex flex-row items-start gap-8 sm:gap-10 overflow-x-auto pt-8 pb-36"
               style={{
                 scrollbarWidth: 'thin',
                 scrollbarColor: '#9A5636 #FAF9F9',
                 minHeight: '920px',
+                paddingLeft: 'max(48px, calc(50% - 250px))',
+                paddingRight: 'max(80px, calc(50% - 250px))',
               }}
             >
               {/* 1. RIDE EASY (Best Flexible Rate) */}
@@ -496,7 +493,7 @@ export const RateSelectionView: React.FC<RateSelectionViewProps> = ({
                   <div
                     ref={(el) => { cardWrapperRefs.current[idx] = el; }}
                     onClick={() => handleSelectCard('ride-easy', idx)}
-                    className="shrink-0 flex flex-col items-center cursor-pointer w-auto mx-[-20px]"
+                    className="shrink-0 flex flex-col items-center cursor-pointer w-auto"
                     style={{
                       marginTop: `${STAGGER_OFFSETS[idx]}px`,
                       transform: isSpotlight ? 'scale(0.85)' : 'scale(0.70)',
@@ -561,7 +558,7 @@ export const RateSelectionView: React.FC<RateSelectionViewProps> = ({
                   <div
                     ref={(el) => { cardWrapperRefs.current[idx] = el; }}
                     onClick={() => handleSelectCard('member', idx)}
-                    className="shrink-0 flex flex-col items-center cursor-pointer w-auto mx-[-20px]"
+                    className="shrink-0 flex flex-col items-center cursor-pointer w-auto"
                     style={{
                       marginTop: `${STAGGER_OFFSETS[idx]}px`,
                       transform: isSpotlight ? 'scale(0.85)' : 'scale(0.70)',
@@ -626,7 +623,7 @@ export const RateSelectionView: React.FC<RateSelectionViewProps> = ({
                   <div
                     ref={(el) => { cardWrapperRefs.current[idx] = el; }}
                     onClick={() => handleSelectCard('sunup', idx)}
-                    className="shrink-0 flex flex-col items-center cursor-pointer w-auto mx-[-20px]"
+                    className="shrink-0 flex flex-col items-center cursor-pointer w-auto"
                     style={{
                       marginTop: `${STAGGER_OFFSETS[idx]}px`,
                       transform: isSpotlight ? 'scale(0.85)' : 'scale(0.70)',
@@ -691,7 +688,7 @@ export const RateSelectionView: React.FC<RateSelectionViewProps> = ({
                   <div
                     ref={(el) => { cardWrapperRefs.current[idx] = el; }}
                     onClick={() => handleSelectCard('stay-while', idx)}
-                    className="shrink-0 flex flex-col items-center cursor-pointer w-auto mx-[-20px]"
+                    className="shrink-0 flex flex-col items-center cursor-pointer w-auto"
                     style={{
                       marginTop: `${STAGGER_OFFSETS[idx]}px`,
                       transform: isSpotlight ? 'scale(0.85)' : 'scale(0.70)',
@@ -756,7 +753,7 @@ export const RateSelectionView: React.FC<RateSelectionViewProps> = ({
                   <div
                     ref={(el) => { cardWrapperRefs.current[idx] = el; }}
                     onClick={() => handleSelectCard('plan-ahead', idx)}
-                    className="shrink-0 flex flex-col items-center cursor-pointer w-auto mx-[-20px]"
+                    className="shrink-0 flex flex-col items-center cursor-pointer w-auto"
                     style={{
                       marginTop: `${STAGGER_OFFSETS[idx]}px`,
                       transform: isSpotlight ? 'scale(0.85)' : 'scale(0.70)',

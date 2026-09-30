@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RideEasySoloPage } from './components/RideEasySoloPage';
-import { BookingStep, SearchCriteria, RoomType, RateOption, BookingState } from './types';
+import { BookingStep, SearchCriteria, RoomType, RateOption, BookingState, AddonSchedulePreference } from './types';
 import { ROOMS, BUILDINGS, RATE_OPTIONS } from './data/hotelData';
 import { Header } from './components/Header';
 import { SearchBar } from './components/SearchBar';
@@ -51,6 +51,7 @@ export default function App() {
   const [selectedRoom, setSelectedRoom] = useState<RoomType | null>(ROOMS[0]); // default to Alpine Bathing Suite for seamless rate preview
   const [selectedRate, setSelectedRate] = useState<RateOption | null>(RATE_OPTIONS[0]); // default to Ride Easy
   const [selectedExtras, setSelectedExtras] = useState<{ [extraId: string]: number }>({});
+  const [extraPreferences, setExtraPreferences] = useState<{ [extraId: string]: AddonSchedulePreference }>({});
   
   const [guestInfo, setGuestInfo] = useState<BookingState['guestInfo']>({
     firstName: '',
@@ -101,12 +102,28 @@ export default function App() {
       }
       return next;
     });
+
+    if (count <= 0) {
+      setExtraPreferences(prev => {
+        const next = { ...prev };
+        delete next[extraId];
+        return next;
+      });
+    }
+  };
+
+  const handleUpdateExtraPreference = (extraId: string, preference: AddonSchedulePreference) => {
+    setExtraPreferences(prev => ({
+      ...prev,
+      [extraId]: preference
+    }));
   };
 
   const handleResetBooking = () => {
     setSelectedRoom(ROOMS[0]);
     setSelectedRate(RATE_OPTIONS[0]);
     setSelectedExtras({});
+    setExtraPreferences({});
     setCurrentStep(2);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -187,6 +204,7 @@ export default function App() {
     selectedRoom,
     selectedRate,
     selectedExtras,
+    extraPreferences,
     guestInfo
   };
 
@@ -314,6 +332,7 @@ export default function App() {
           <ExtrasStep
             bookingState={bookingState}
             onUpdateExtras={handleUpdateExtras}
+            onUpdateExtraPreference={handleUpdateExtraPreference}
             onProceedToPay={() => handleStepChange(5)}
             onBackToRates={() => handleStepChange(3)}
           />

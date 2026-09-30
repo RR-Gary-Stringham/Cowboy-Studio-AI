@@ -82,12 +82,27 @@ export interface RateOption {
 export interface ExtraItem {
   id: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   description: string;
   price: number;
+  priceDisplay?: string;
   perPerson?: boolean;
   image: string;
-  category: 'wellness' | 'dining' | 'outdoors' | 'pets';
+  category?: 'wellness' | 'dining' | 'outdoors' | 'pets' | 'celebration';
+}
+
+export interface AddonSchedulePreference {
+  deliveryType?: 'waiting-in-room' | 'scheduled-day' | 'gift-surprise';
+  selectedDate?: string; // formatted e.g. "Thursday, 06/20 (Arrival Night)" or ISO string
+  selectedDateIso?: string;
+  selectedTime?: string; // e.g. "Prior to check-in (4:00 PM)", "Evening service (8:00 PM)"
+  customTime?: string;
+  isGift?: boolean;
+  giftRecipient?: string;
+  includeCard?: boolean;
+  cardMessage?: string;
+  itemCustomization?: string; // Cake inscription, wine varietal, dog's name, dietary notes
+  dietaryNote?: string;
 }
 
 export interface BookingState {
@@ -96,6 +111,7 @@ export interface BookingState {
   selectedRoom: RoomType | null;
   selectedRate: RateOption | null;
   selectedExtras: { [extraId: string]: number };
+  extraPreferences?: { [extraId: string]: AddonSchedulePreference };
   guestInfo: {
     firstName: string;
     lastName: string;

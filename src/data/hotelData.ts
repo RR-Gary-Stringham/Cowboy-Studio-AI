@@ -451,43 +451,75 @@ export const RATE_OPTIONS: RateOption[] = [
 
 export const EXTRAS: ExtraItem[] = [
   {
-    id: 'sauna-session',
-    title: 'Private Estonian Sauna & Cold Plunge',
-    subtitle: '90-minute wood-fired thermal ritual',
-    description: 'Exclusive private session in our barrel sauna nestled beside Esopus Creek, paired with cedar cold plunge tubs and herbal steams.',
-    price: 75,
-    perPerson: false,
-    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80',
-    category: 'wellness'
+    id: 'pup-stay',
+    title: 'WILL YOUR PUP BE JOINING YOU?',
+    price: 50,
+    priceDisplay: '$50.00',
+    description: 'Bring the dog. We love meeting them.\n\nA $50 per dog, per night cleaning fee applies. Dogs only, please. If you forgot potty bags, food, or treats, swing by the Front Desk. Chances are the team was already hoping to meet your pup anyway.',
+    image: 'https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80',
+    category: 'pets'
   },
   {
-    id: 'smores-bourbon',
-    title: 'Fireside S\'mores & Hudson Bourbon Flight',
-    subtitle: 'Evening fireside kit for two',
-    description: 'Handcrafted vanilla bean marshmallows, dark sea-salt chocolate, graham biscuits, and two 2oz pours of local Catskill Distilling whiskey.',
-    price: 48,
-    perPerson: false,
-    image: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80',
+    id: 'hummus-crudites',
+    title: 'LET’S EAT! HUMMUS & CRUDITÉS',
+    price: 18,
+    priceDisplay: '$18.00',
+    description: 'Pendleton robe on. Catskills outside. Snacks handled.\n\nHouse-made hummus served with a colorful selection of our favorite local, seasonal vegetables.',
+    image: 'https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=800&q=80',
     category: 'dining'
   },
   {
-    id: 'bath-soak-pack',
-    title: 'Wild Pine & Cedar Bath Botanical Soak Kit',
-    subtitle: 'In-room tub ritual package',
-    description: 'Organic Dead Sea bath salts infused with pine needle, sweet orange, dried juniper berries, and handmade cedar soap for your soaking tub.',
+    id: 'smores-kit',
+    title: 'S’MORES KIT',
     price: 35,
-    perPerson: false,
-    image: 'https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?auto=format&fit=crop&w=600&q=80',
+    priceDisplay: '$35.00',
+    description: 'Meet at the fire. Everything you need for a proper Cowboy s’more, packed and ready for the fire. Graham crackers, marshmallows, chocolate, and skewers included. All that’s missing is a little smoke in your hair.',
+    image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80',
+    category: 'dining'
+  },
+  {
+    id: 'bathing-ritual-kit',
+    title: 'BATHING RITUAL KIT',
+    price: 75,
+    priceDisplay: '$75.00',
+    description: 'Make the tub part of the plan. Your bathing ritual kit includes a few simple things to slow things down, like bath soak, a face mask, herbal tea, and a little something for afterward. Run the water. Put the robe on. The rest can wait.',
+    image: 'https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?auto=format&fit=crop&w=800&q=80',
     category: 'wellness'
   },
   {
-    id: 'dog-welcome-kit',
-    title: 'Cowboy Pup Hospitality Pack',
-    subtitle: 'For your trail companion',
-    description: 'Handmade leather leash, organic bacon trail treats, stainless field bowl, and a memory foam dog bed prepared in your suite.',
+    id: 'fresh-cut-flowers',
+    title: 'Fresh Cut Flowers',
+    price: 55,
+    priceDisplay: '$55.00',
+    description: 'Bring a little of the Catskills inside. We’ll have a fresh bouquet waiting in your room when you arrive.',
+    image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80',
+    category: 'celebration'
+  },
+  {
+    id: 'chocolate-truffles',
+    title: 'LET’S EAT! CHOCOLATE TRUFFLES',
+    price: 18,
+    priceDisplay: '$18.00',
+    description: 'A little taste of the Catskills waiting in your room. Six handpicked assorted chocolate truffles, perfect for arrival, after dinner, or whenever the mood strikes.',
+    image: 'https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=800&q=80',
+    category: 'dining'
+  },
+  {
+    id: 'wine-bottle',
+    title: 'LET’S DRINK! WINE',
     price: 65,
-    perPerson: false,
-    image: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=600&q=80',
-    category: 'pets'
+    priceDisplay: '$65.00',
+    description: 'Start your stay the Cowboy way, with a bottle waiting in your room when you arrive.\n\nChoose from Red, White, Sparkling, Orange, or Rosé, and we’ll select one of our favorites for you.',
+    image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80',
+    category: 'dining'
+  },
+  {
+    id: 'celebration-cake',
+    title: 'CELEBRATION CAKE',
+    price: 65,
+    priceDisplay: '$65.00',
+    description: 'Mark a birthday, anniversary, or just a very good reason to get away with something sweet waiting in your room. We’ll have a celebration cake ready for your arrival, sourced from one of our favorite local bakers.',
+    image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80',
+    category: 'celebration'
   }
 ];
