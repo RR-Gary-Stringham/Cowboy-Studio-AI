@@ -1,5 +1,7 @@
 import React from 'react';
 import { BookingStep } from '../types';
+import { ProgressBar, type ProgressStepData } from '../features/find-your-stay/components/progress/ProgressBar';
+import { ProgressStep, type ProgressStepState } from '../features/find-your-stay/components/progress/ProgressStep';
 
 interface HeaderProps {
   currentStep: BookingStep;
@@ -12,19 +14,37 @@ export const Header: React.FC<HeaderProps> = ({
   onStepChange,
   canNavigateToStep
 }) => {
-  const steps = [
-    { number: 1, label: 'Stay' },
-    { number: 2, label: 'Room' },
-    { number: 3, label: 'Details' },
-    { number: 4, label: 'Extras' },
-    { number: 5, label: 'Pay' }
+  const steps: ProgressStepData[] = [
+    { step: 1, label: 'Stay' },
+    { step: 2, label: 'Room' },
+    { step: 3, label: 'Details' },
+    { step: 4, label: 'Extras' },
+    { step: 5, label: 'Pay' }
   ];
+
+  const progressSlots = Object.fromEntries(
+    steps.map((item) => {
+      const state: ProgressStepState = item.step < currentStep ? 'complete' : item.step === currentStep ? 'current' : 'default';
+      const canNavigate = canNavigateToStep(item.step as BookingStep);
+      return [
+        item.step,
+        <ProgressStep
+          key={item.step}
+          step={item.step}
+          label={item.label}
+          state={state}
+          disabled={!canNavigate}
+          onClick={(step) => onStepChange(step as BookingStep)}
+        />
+      ];
+    })
+  );
 
   return (
     <header className="sticky top-0 z-40 w-full bg-[#EBE8E0]/95 backdrop-blur-md border-b border-[#4E332D]/10">
-      <div className="max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="booking-shell">
         {/* Top bar */}
-        <div className="flex items-center justify-between h-16 sm:h-[67px] max-w-[1600px] w-full mx-auto">
+        <div className="flex h-16 w-full items-center justify-between sm:h-[67px]">
           {/* Logo */}
           <button
             onClick={() => onStepChange(1)}
@@ -38,51 +58,9 @@ export const Header: React.FC<HeaderProps> = ({
             />
           </button>
 
-          {/* Stepper Progress (Center Desktop) */}
-          <nav aria-label="Booking Progress" className="hidden md:flex items-center">
-            <div className="flex items-center bg-white/70 p-1.5 rounded-full border border-[#D1C9BE] shadow-xs">
-              {steps.map((step, idx) => {
-                const isActive = currentStep === step.number;
-                const isPast = currentStep > step.number;
-                const isClickable = canNavigateToStep(step.number as BookingStep);
-
-                return (
-                  <React.Fragment key={step.number}>
-                    <button
-                      onClick={() => isClickable && onStepChange(step.number as BookingStep)}
-                      disabled={!isClickable}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-woodblock tracking-wider uppercase transition-all ${
-                        isActive
-                          ? 'bg-[#9A5636] text-[#EBE8E0] shadow-xs font-semibold'
-                          : isPast
-                          ? 'text-[#4E332D] hover:bg-[#EBE8E0]/60 cursor-pointer'
-                          : 'text-[#767470] opacity-60 cursor-not-allowed'
-                      }`}
-                    >
-                      <span
-                        className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-sans font-medium border ${
-                          isActive
-                            ? 'border-[#EBE8E0] text-[#EBE8E0]'
-                            : isPast
-                            ? 'border-[#4E332D] text-[#4E332D] bg-[#EBE8E0]/40'
-                            : 'border-[#CCC7BB] text-[#767470]'
-                        }`}
-                      >
-                        {step.number}
-                      </span>
-                      <span>{step.label}</span>
-                    </button>
-
-                    {idx < steps.length - 1 && (
-                      <span className="mx-1 text-[#CCC7BB] font-serif text-sm select-none">
-                        /
-                      </span>
-                    )}
-                  </React.Fragment>
-                );
-              })}
-            </div>
-          </nav>
+          <div className="hidden items-center rounded-full border border-[#D1C9BE] bg-[#FAF9F9] px-1.5 shadow-xs md:flex">
+            <ProgressBar currentStep={currentStep} steps={steps} slots={progressSlots} />
+          </div>
 
           {/* Best Rate Guaranteed Badge */}
           <div className="flex items-center gap-1.5 text-[#4E332D] border-b sm:border-b-0 border-[#4E332D]/20 pb-0.5">
@@ -97,28 +75,8 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Mobile Stepper Bar */}
-        <div className="flex md:hidden items-center justify-between py-2 border-t border-[#4E332D]/10 overflow-x-auto hide-scrollbar">
-          {steps.map((step) => {
-            const isActive = currentStep === step.number;
-            const isClickable = canNavigateToStep(step.number as BookingStep);
-
-            return (
-              <button
-                key={step.number}
-                onClick={() => isClickable && onStepChange(step.number as BookingStep)}
-                disabled={!isClickable}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-woodblock uppercase tracking-wider whitespace-nowrap ${
-                  isActive
-                    ? 'bg-[#9A5636] text-white font-bold'
-                    : 'text-[#767470]'
-                }`}
-              >
-                <span>{step.number}.</span>
-                <span>{step.label}</span>
-              </button>
-            );
-          })}
+        <div className="flex items-center overflow-x-auto border-t border-[#4E332D]/10 py-2 md:hidden hide-scrollbar">
+          <ProgressBar currentStep={currentStep} steps={steps} slots={progressSlots} className="mx-auto" />
         </div>
       </div>
     </header>

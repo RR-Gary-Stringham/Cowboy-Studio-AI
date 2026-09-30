@@ -85,7 +85,7 @@ export const RateSelectionView: React.FC<RateSelectionViewProps> = ({
   return (
     <div className="w-full texture-linen min-h-screen pb-20">
       {/* Top Breadcrumb Navigation */}
-      <div className="max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
+      <div className="booking-shell pb-4 pt-8">
         <button
           onClick={onChangeRoom}
           className="inline-flex items-center gap-2 font-woodblock text-xs uppercase tracking-widest text-[#73716D] hover:text-[#4E332D] transition-colors cursor-pointer mb-2"
@@ -96,7 +96,7 @@ export const RateSelectionView: React.FC<RateSelectionViewProps> = ({
       </div>
 
       {/* Main Split Screen */}
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="booking-shell">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           {/* ================= LEFT COLUMN: ROOM SPEC OR MINIMIZED VERTICAL BAR ================= */}
           {isLeftCardMinimized ? (

@@ -23,7 +23,7 @@ export const PillarFeatures: React.FC = () => {
   ];
 
   return (
-    <section className="w-full max-w-5xl mx-auto px-4 py-12 md:py-16">
+    <section className="booking-shell py-12 md:py-16">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
         {pillars.map((p, idx) => (
           <div

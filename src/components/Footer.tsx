@@ -3,7 +3,7 @@ import React from 'react';
 export const Footer: React.FC = () => {
   return (
     <footer className="w-full bg-[#4E332D] text-[#EBE8E0] pt-14 pb-12 mt-20 border-t-4 border-[#343833]">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="booking-shell">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 pb-10 border-b border-[#EBE8E0]/15 text-center md:text-left">
           <div>
             <img

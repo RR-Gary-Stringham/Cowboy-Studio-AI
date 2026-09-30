@@ -132,7 +132,7 @@ export const CheckoutStep: React.FC<CheckoutStepProps> = ({
   }
 
   return (
-    <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="booking-shell py-10">
       <button
         onClick={onBackToExtras}
         className="inline-flex items-center gap-2 font-woodblock text-xs uppercase tracking-widest text-[#73716D] hover:text-[#4E332D] mb-6 cursor-pointer"

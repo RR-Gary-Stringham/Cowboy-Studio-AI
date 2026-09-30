@@ -248,8 +248,8 @@ export const RateSelectionView: React.FC<RateSelectionViewProps> = ({
     <div className="w-full texture-linen min-h-screen pb-24 overflow-x-hidden">
       {/* ================= TOP HEADER BAR: SELECTED ROOM & TRIP SPECS ================= */}
       <div className="bg-[#FAF9F9] border-b-2 border-[#4E332D]/20 shadow-xs sticky top-0 z-30 backdrop-blur-md bg-[#FAF9F9]/95">
-        <div className="max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 max-w-[1600px] w-full mx-auto">
+        <div className="booking-shell py-4 sm:py-5">
+          <div className="flex w-full flex-col justify-between gap-4 lg:flex-row lg:items-center">
             
             {/* Left Section: Back to Room Selection + Room Type Name */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
@@ -332,7 +332,7 @@ export const RateSelectionView: React.FC<RateSelectionViewProps> = ({
       </div>
 
       {/* ================= MAIN CONTAINER: RATE SELECTION & OFFERS CARDS ================= */}
-      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <div className="booking-shell pt-6">
         <div className="space-y-4">
           
           {/* Header Bar: SELECT A RATE + VIEW SWITCHER + SPOTLIGHT CONTROLS */}

@@ -88,7 +88,7 @@ export const BuildingExperienceList: React.FC<BuildingExperienceListProps> = ({
   return (
     <div className="w-full texture-linen min-h-screen pb-24">
       {/* Top Editorial Bar */}
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6 border-b border-[#4E332D]/15">
+      <div className="booking-shell border-b border-[#4E332D]/15 pb-6 pt-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <button
@@ -222,7 +222,7 @@ export const BuildingExperienceList: React.FC<BuildingExperienceListProps> = ({
 
       {/* SPREAD MODE: Exact Artboards from User PDF Screenshots 1 & 4 */}
       {layoutMode === 'spread' && (
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-20">
+        <div className="booking-shell space-y-20 py-10">
           {/* SECTION 1: ALPINE HAUS SPREAD (Exact layout from Screenshot 1!) */}
           {(selectedBuildingId === 'all' || selectedBuildingId === 'alpine') && (
             <div className="relative">
@@ -434,7 +434,7 @@ export const BuildingExperienceList: React.FC<BuildingExperienceListProps> = ({
 
       {/* CATALOG MODE: Longitudinal narrative with tactile room cards */}
       {layoutMode === 'catalog' && (
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+        <div className="booking-shell space-y-12 py-10">
           {BUILDINGS.filter(
             (b) => selectedBuildingId === 'all' || selectedBuildingId === b.id
           ).map((building) => {

@@ -1,18 +1,29 @@
 import React, { useState } from 'react';
 import { RideEasySoloPage } from './components/RideEasySoloPage';
-import { BookingStep, SearchCriteria, RoomType, RateOption, BookingState } from './types';
-import { ROOMS, BUILDINGS, RATE_OPTIONS } from './data/hotelData';
+import {
+  BookingStep,
+  SearchCriteria,
+  RoomType,
+  RateOption,
+  BookingState,
+  RecommendationPreferences
+} from './types';
+import { ROOMS, RATE_OPTIONS } from './data/hotelData';
 import { Header } from './components/Header';
 import { SearchBar } from './components/SearchBar';
 import { PillarFeatures } from './components/PillarFeatures';
 import { BuildingExperienceList } from './components/BuildingExperienceList';
 import { RateSelectionView } from './components/RateSelectionView';
 import { RoomDetailModal } from './components/RoomDetailModal';
-import { HelpMeChooseModal } from './components/HelpMeChooseModal';
 import { ExtrasStep } from './components/ExtrasStep';
 import { CheckoutStep } from './components/CheckoutStep';
 import { Footer } from './components/Footer';
-import { ArrowRight, Compass, Sparkles, Bath, Shield, Eye } from 'lucide-react';
+import { FindYourStay } from './features/find-your-stay/components/flows/FindYourStay';
+import { HelpMeChoose } from './features/find-your-stay/components/flows/HelpMeChoose';
+import { MatchResults } from './features/find-your-stay/components/flows/MatchResults';
+import { rankRecommendedRooms } from './features/find-your-stay/roomMatching';
+
+type RoomDiscoveryView = 'explore' | 'quiz' | 'matches' | 'rooms';
 
 export default function App() {
   const [viewMode, setViewMode] = useState<'solo-ride-easy' | 'full-app'>('full-app');
@@ -36,7 +47,10 @@ export default function App() {
   }
 
   const [rateVersion, setRateVersion] = useState<'v1' | 'v2'>('v2');
-  const [currentStep, setCurrentStep] = useState<BookingStep>(2);
+  const [currentStep, setCurrentStep] = useState<BookingStep>(1);
+  const [roomDiscoveryView, setRoomDiscoveryView] = useState<RoomDiscoveryView>('explore');
+  const [recommendationPreferences, setRecommendationPreferences] =
+    useState<RecommendationPreferences | null>(null);
   
   const [criteria, setCriteria] = useState<SearchCriteria>({
     property: 'Catskills',
@@ -44,6 +58,8 @@ export default function App() {
     checkOut: '2026-10-17',
     nights: 3,
     guests: 2,
+    children: 0,
+    accessible: false,
     rooms: 1,
     promoCode: ''
   });
@@ -64,8 +80,6 @@ export default function App() {
 
   // Modal states
   const [modalRoom, setModalRoom] = useState<RoomType | null>(null);
-  const [isHelpMeChooseOpen, setIsHelpMeChooseOpen] = useState(false);
-
   const canNavigateToStep = (step: BookingStep) => {
     if (step === 1 || step === 2) return true;
     if (step === 3) return selectedRoom !== null;
@@ -75,7 +89,14 @@ export default function App() {
   };
 
   const handleStepChange = (step: BookingStep) => {
+    if (step === 2 && currentStep !== 2) setRoomDiscoveryView('explore');
     setCurrentStep(step);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const openRoomDiscovery = (view: RoomDiscoveryView) => {
+    setRoomDiscoveryView(view);
+    setCurrentStep(2);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -107,7 +128,9 @@ export default function App() {
     setSelectedRoom(ROOMS[0]);
     setSelectedRate(RATE_OPTIONS[0]);
     setSelectedExtras({});
-    setCurrentStep(2);
+    setRoomDiscoveryView('explore');
+    setRecommendationPreferences(null);
+    setCurrentStep(1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -204,14 +227,14 @@ export default function App() {
         {/* STEP 1: Availability Criteria / Landing */}
         {currentStep === 1 && (
           <div className="w-full py-12 md:py-16">
-            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 text-center mb-10">
-              <span className="font-woodblock text-xs uppercase tracking-widest text-[#9A5636] font-bold block mb-2">
+            <div className="booking-shell mb-10 text-center">
+              <span className="font-bianco text-xs uppercase tracking-widest text-[#9A5636] font-bold block mb-2">
                 CATSKILLS · BIG INDIAN, NY
               </span>
-              <h1 className="font-display font-bold text-5xl sm:text-6xl md:text-7xl text-[#4E332D] tracking-wide uppercase leading-none mb-3">
+              <h1 className="mb-3 font-desert text-[55px] font-bold uppercase leading-none tracking-[2px] text-[#4E332D]">
                 Book Your Stay
               </h1>
-              <p className="font-editorial italic text-lg sm:text-xl text-[#4E332D]/80">
+              <p className="font-editorial text-lg text-[#4E332D]/80 sm:text-xl">
                 Arrive as Strangers. Leave as Friends.
               </p>
             </div>
@@ -221,77 +244,59 @@ export default function App() {
               <SearchBar
                 criteria={criteria}
                 onUpdateCriteria={setCriteria}
-                onSearch={() => handleStepChange(2)}
+                onSearch={() => openRoomDiscovery('explore')}
               />
             </div>
 
             {/* Three Iconic Pillars */}
             <PillarFeatures />
 
-            {/* Quick Preview of Building Experiences */}
-            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-8 border-t border-[#D1C9BE]">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-                <div>
-                  <h3 className="font-display font-bold text-2xl uppercase text-[#221C18]">
-                    Explore Buildings & Soaking Suites
-                  </h3>
-                  <p className="font-editorial text-sm text-[#6B6259]">
-                    Choose from Alpine's picture windows, Walden's outdoor cedar tubs, or The Lodge's stone hearths.
-                  </p>
-                </div>
-                <button
-                  onClick={() => handleStepChange(2)}
-                  className="flex items-center gap-2 bg-[#4E332D] hover:bg-[#343833] text-white px-6 py-3 rounded-full font-woodblock text-xs uppercase tracking-widest cursor-pointer shadow-sm transition-transform active:scale-95"
-                >
-                  <span>Browse All 8 Rooms</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {BUILDINGS.map((b) => (
-                  <div
-                    key={b.id}
-                    onClick={() => handleStepChange(2)}
-                    className="group cursor-pointer rounded-2xl overflow-hidden border border-[#D1C9BE] bg-white shadow-xs hover:shadow-md transition-all"
-                  >
-                    <div className="h-44 overflow-hidden relative">
-                      <img
-                        src={b.heroImage}
-                        alt={b.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute top-3 left-3 bg-[#FAF9F9]/90 px-2.5 py-0.5 rounded-full text-[10px] font-woodblock uppercase tracking-wider text-[#4E332D] font-bold">
-                        {b.number}
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <h4 className="font-display font-bold text-lg text-[#221C18] uppercase">
-                        {b.name}
-                      </h4>
-                      <p className="font-editorial text-xs text-[#6B6259] mt-1 line-clamp-2">
-                        {b.tagline}
-                      </p>
-                      <span className="font-woodblock text-[11px] uppercase tracking-wider text-[#9A5636] font-bold mt-3 block group-hover:underline">
-                        Explore Rooms →
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
         )}
 
-        {/* STEP 2: Find Your Stay (Building & Room Experiences) */}
-        {currentStep === 2 && (
+        {/* STEP 2: Choose a discovery path after date entry */}
+        {currentStep === 2 && roomDiscoveryView === 'explore' && (
+          <FindYourStay
+            criteria={criteria}
+            availableCount={ROOMS.length}
+            onChangeSearch={() => handleStepChange(1)}
+            onHelpMeChoose={() => openRoomDiscovery('quiz')}
+            onBrowseAll={() => openRoomDiscovery('rooms')}
+          />
+        )}
+
+        {currentStep === 2 && roomDiscoveryView === 'quiz' && (
+          <HelpMeChoose
+            initialPreferences={recommendationPreferences}
+            onBack={() => openRoomDiscovery('explore')}
+            onSubmit={(preferences) => {
+              setRecommendationPreferences(preferences);
+              openRoomDiscovery('matches');
+            }}
+          />
+        )}
+
+        {currentStep === 2 && roomDiscoveryView === 'matches' && recommendationPreferences && (
+          <MatchResults
+            rooms={rankRecommendedRooms(ROOMS, recommendationPreferences, criteria)}
+            criteria={criteria}
+            preferences={recommendationPreferences}
+            onBack={() => openRoomDiscovery('quiz')}
+            onBrowseAll={() => openRoomDiscovery('rooms')}
+            onSelectRoom={handleSelectRoom}
+            onOpenRoomDetails={(room) => setModalRoom(room)}
+          />
+        )}
+
+        {/* Browse-all room experience */}
+        {currentStep === 2 && roomDiscoveryView === 'rooms' && (
           <BuildingExperienceList
             criteria={criteria}
             onUpdateCriteria={setCriteria}
             onSelectRoom={handleSelectRoom}
             onOpenRoomDetails={(room) => setModalRoom(room)}
-            onOpenHelpMeChoose={() => setIsHelpMeChooseOpen(true)}
-            onBackToSearch={() => handleStepChange(1)}
+            onOpenHelpMeChoose={() => openRoomDiscovery('quiz')}
+            onBackToSearch={() => openRoomDiscovery('explore')}
           />
         )}
 
@@ -338,16 +343,6 @@ export default function App() {
         onProceedToRates={(room) => {
           setSelectedRoom(room);
           setModalRoom(null);
-          handleStepChange(3);
-        }}
-      />
-
-      {/* "Help Me Choose" Experiential Vibe Matcher */}
-      <HelpMeChooseModal
-        isOpen={isHelpMeChooseOpen}
-        onClose={() => setIsHelpMeChooseOpen(false)}
-        onSelectRoom={(room) => {
-          setSelectedRoom(room);
           handleStepChange(3);
         }}
       />

@@ -4,8 +4,26 @@ export interface SearchCriteria {
   checkOut: string; // e.g. "2026-10-17"
   nights: number;
   guests: number;
+  children?: number;
+  accessible?: boolean;
   rooms: number;
   promoCode?: string;
+}
+
+export type PartyType = 'partner' | 'friends' | 'family' | 'solo';
+
+export type MatchInterest =
+  | 'iconTub'
+  | 'outdoorSoak'
+  | 'ownPlace'
+  | 'scenic'
+  | 'simpleCozy'
+  | 'social';
+
+export interface RecommendationPreferences {
+  party: PartyType;
+  dog: boolean;
+  interests: [MatchInterest, MatchInterest?];
 }
 
 export type BookingStep = 1 | 2 | 3 | 4 | 5;

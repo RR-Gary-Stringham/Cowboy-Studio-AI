@@ -41,6 +41,22 @@
 }
 
 @font-face {
+  font-family: 'Bianco Sans';
+  src: url('/fonts/Bianco_Sans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bianco Sans';
+  src: url('/fonts/Bianco_Sans-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'CedarvilleCursive';
   src: url('/fonts/Cedarville-Cursive.woff2') format('woff2');
   font-weight: 400;
@@ -55,6 +71,14 @@
 }
 
 @layer utilities {
+  .booking-shell {
+    width: 100%;
+    max-width: 1800px;
+    box-sizing: border-box;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 2.5vw, 3rem);
+  }
+
   .font-display {
     font-family: 'BrothersOT', 'Cinzel', 'Quattrocento', serif;
   }
@@ -69,6 +93,9 @@
   }
   .font-woodblock {
     font-family: 'Oswald', 'League Spartan', sans-serif;
+  }
+  .font-bianco {
+    font-family: 'Bianco Sans', 'Oswald', 'League Spartan', sans-serif;
   }
   .font-quattrocento {
     font-family: 'Quattrocento', Georgia, serif;
@@ -158,4 +185,3 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
