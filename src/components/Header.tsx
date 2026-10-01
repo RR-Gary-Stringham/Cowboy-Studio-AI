@@ -5,12 +5,18 @@ interface HeaderProps {
   currentStep: BookingStep;
   onStepChange: (step: BookingStep) => void;
   canNavigateToStep: (step: BookingStep) => boolean;
+  onToggleMiniEngine?: () => void;
+  isMiniEngineActive?: boolean;
+  onOpenRoomMatcher?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   currentStep,
   onStepChange,
-  canNavigateToStep
+  canNavigateToStep,
+  onToggleMiniEngine,
+  isMiniEngineActive = false,
+  onOpenRoomMatcher
 }) => {
   const steps = [
     { number: 1, label: 'Stay' },
@@ -84,16 +90,45 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </nav>
 
-          {/* Best Rate Guaranteed Badge */}
-          <div className="flex items-center gap-1.5 text-[#4E332D] border-b sm:border-b-0 border-[#4E332D]/20 pb-0.5">
-            <img
-              src="/assets/badges/sheriff-badge.svg"
-              alt="Sheriff Badge"
-              className="w-4 h-4 object-contain select-none"
-            />
-            <span className="font-woodblock text-[11px] sm:text-xs tracking-wider uppercase font-semibold text-[#4E332D]">
-              Best Price Guaranteed
-            </span>
+          {/* Right Action & Badges */}
+          <div className="flex items-center gap-2.5">
+            {onOpenRoomMatcher && (
+              <button
+                type="button"
+                onClick={onOpenRoomMatcher}
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-woodblock uppercase tracking-wider transition-all cursor-pointer border bg-white/80 hover:bg-white text-[#4E332D] border-[#D1C9BE] shadow-2xs"
+                title="Open the Experience Matching Flow"
+              >
+                <span>✦ Room Matcher</span>
+              </button>
+            )}
+
+            {onToggleMiniEngine && (
+              <button
+                type="button"
+                onClick={onToggleMiniEngine}
+                className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-woodblock uppercase tracking-wider transition-all cursor-pointer border ${
+                  isMiniEngineActive
+                    ? 'bg-[#4E332D] text-white border-[#4E332D] shadow-xs'
+                    : 'bg-white/80 hover:bg-white text-[#9A5636] border-[#9A5636]/30'
+                }`}
+                title="Switch between the Full Booking Engine Flow and the Embedded Mini Booking Engine Showcase"
+              >
+                <span>Mini Engine</span>
+              </button>
+            )}
+
+            {/* Best Rate Guaranteed Badge */}
+            <div className="flex items-center gap-1.5 text-[#4E332D] border-b sm:border-b-0 border-[#4E332D]/20 pb-0.5">
+              <img
+                src="/assets/badges/sheriff-badge.svg"
+                alt="Sheriff Badge"
+                className="w-4 h-4 object-contain select-none"
+              />
+              <span className="font-woodblock text-[11px] sm:text-xs tracking-wider uppercase font-semibold text-[#4E332D]">
+                Best Price Guaranteed
+              </span>
+            </div>
           </div>
         </div>
 

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { RideEasySoloPage } from './components/RideEasySoloPage';
+import { IntegratedMiniEngineShowcase } from './components/mini-engine/IntegratedMiniEngineShowcase';
+import { RoomMatcherPage } from './components/room-matcher/RoomMatcherPage';
+import { MatchOrBrowseScreen } from './components/MatchOrBrowseScreen';
 import { BookingStep, SearchCriteria, RoomType, RateOption, BookingState, AddonSchedulePreference } from './types';
 import { ROOMS, BUILDINGS, RATE_OPTIONS } from './data/hotelData';
 import { Header } from './components/Header';
@@ -15,28 +18,10 @@ import { Footer } from './components/Footer';
 import { ArrowRight, Compass, Sparkles, Bath, Shield, Eye } from 'lucide-react';
 
 export default function App() {
-  const [viewMode, setViewMode] = useState<'solo-ride-easy' | 'full-app'>('full-app');
-
-  // If in solo mode, render strictly the blank page with RideEasy component centered
-  if (viewMode === 'solo-ride-easy') {
-    return (
-      <div className="relative">
-        <RideEasySoloPage />
-        {/* Discreet toggle button in bottom-right corner */}
-        <div className="fixed bottom-4 right-4 z-50">
-          <button
-            onClick={() => setViewMode('full-app')}
-            className="text-[11px] font-mono px-3 py-1.5 rounded-full bg-[#343833]/10 hover:bg-[#343833]/20 text-[#343833] transition-all cursor-pointer backdrop-blur-xs opacity-60 hover:opacity-100"
-          >
-            Switch to Full Booking Page
-          </button>
-        </div>
-      </div>
-    );
-  }
-
+  const [viewMode, setViewMode] = useState<'room-matcher' | 'mini-engine-showcase' | 'full-app' | 'solo-ride-easy'>('full-app');
   const [rateVersion, setRateVersion] = useState<'v1' | 'v2'>('v2');
-  const [currentStep, setCurrentStep] = useState<BookingStep>(2);
+  const [currentStep, setCurrentStep] = useState<BookingStep>(1);
+  const [isMatchPromptActive, setIsMatchPromptActive] = useState<boolean>(false);
   
   const [criteria, setCriteria] = useState<SearchCriteria>({
     property: 'Catskills',
@@ -76,6 +61,7 @@ export default function App() {
   };
 
   const handleStepChange = (step: BookingStep) => {
+    setIsMatchPromptActive(false);
     setCurrentStep(step);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -89,6 +75,15 @@ export default function App() {
   const handleSelectRate = (rate: RateOption) => {
     setSelectedRate(rate);
     setCurrentStep(4); // Go to Extras
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleLaunchFromMiniEngine = (room: RoomType, rate: RateOption, newCriteria: SearchCriteria) => {
+    setSelectedRoom(room);
+    setSelectedRate(rate);
+    setCriteria(newCriteria);
+    setViewMode('full-app');
+    setCurrentStep(4); // Advance into Extras/Add-ons or Rate details with selection pre-loaded!
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -127,6 +122,136 @@ export default function App() {
     setCurrentStep(2);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // If in Room Matcher mode (Blank page dedicated option matching user flow)
+  if (viewMode === 'room-matcher') {
+    return (
+      <div className="relative min-h-screen bg-[#FAF9F9]">
+        <RoomMatcherPage
+          criteria={criteria}
+          onSelectRoomAndBook={(room) => {
+            setSelectedRoom(room);
+            setViewMode('full-app');
+            setIsMatchPromptActive(false);
+            setCurrentStep(3); // Direct into Rate Selection & booking flow with room selected
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          onViewAllRooms={() => {
+            setViewMode('full-app');
+            setIsMatchPromptActive(false);
+            setCurrentStep(2); // Browse All Rooms
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          onReturnToSite={() => {
+            setViewMode('full-app');
+            setIsMatchPromptActive(false);
+            setCurrentStep(1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        />
+
+        {/* Floating switcher in bottom-right corner */}
+        <div className="fixed bottom-4 right-4 z-50 flex items-center gap-1.5 p-1 bg-[#221C18]/90 text-white rounded-full shadow-2xl backdrop-blur-md border border-white/20">
+          <button
+            onClick={() => setViewMode('room-matcher')}
+            className="text-[11px] font-mono px-3 py-1.5 rounded-full bg-[#9A5636] text-white font-bold transition-all cursor-pointer"
+          >
+            ✦ Room Matcher
+          </button>
+          <button
+            onClick={() => setViewMode('mini-engine-showcase')}
+            className="text-[11px] font-mono px-3 py-1.5 rounded-full text-white/70 hover:text-white transition-all cursor-pointer"
+          >
+            Mini Engine Embed
+          </button>
+          <button
+            onClick={() => setViewMode('full-app')}
+            className="text-[11px] font-mono px-3 py-1.5 rounded-full text-white/70 hover:text-white transition-all cursor-pointer"
+          >
+            Main Booking Flow
+          </button>
+          <button
+            onClick={() => setViewMode('solo-ride-easy')}
+            className="text-[11px] font-mono px-2.5 py-1.5 rounded-full text-white/50 hover:text-white transition-all cursor-pointer"
+          >
+            Solo Card
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // If in solo mode, render strictly the blank page with RideEasy component centered
+  if (viewMode === 'solo-ride-easy') {
+    return (
+      <div className="relative min-h-screen bg-[#FAF9F9]">
+        <RideEasySoloPage />
+        {/* Floating switcher in bottom-right corner */}
+        <div className="fixed bottom-4 right-4 z-50 flex items-center gap-1.5 p-1 bg-[#221C18]/90 text-white rounded-full shadow-2xl backdrop-blur-md border border-white/20">
+          <button
+            onClick={() => setViewMode('room-matcher')}
+            className="text-[11px] font-mono px-3 py-1.5 rounded-full text-white/70 hover:text-white transition-all cursor-pointer"
+          >
+            ✦ Room Matcher
+          </button>
+          <button
+            onClick={() => setViewMode('mini-engine-showcase')}
+            className="text-[11px] font-mono px-3 py-1.5 rounded-full text-white/70 hover:text-white transition-all cursor-pointer"
+          >
+            Mini Engine Embed
+          </button>
+          <button
+            onClick={() => setViewMode('full-app')}
+            className="text-[11px] font-mono px-3 py-1.5 rounded-full text-white/70 hover:text-white transition-all cursor-pointer"
+          >
+            Main Booking Flow
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // If in Mini Engine Showcase mode, render the interactive marketing pages with embedded booking
+  if (viewMode === 'mini-engine-showcase') {
+    return (
+      <div className="relative min-h-screen bg-[#EBE8E0]">
+        <IntegratedMiniEngineShowcase
+          sessionCriteria={criteria}
+          onUpdateSessionCriteria={setCriteria}
+          onLaunchMainBooking={handleLaunchFromMiniEngine}
+          onSwitchToFullBookingFlow={() => setViewMode('full-app')}
+        />
+
+        {/* Floating Quick Mode Switcher */}
+        <div className="fixed bottom-4 right-4 z-50 flex items-center gap-1.5 p-1 bg-[#221C18]/90 text-white rounded-full shadow-2xl backdrop-blur-md border border-white/20">
+          <button
+            onClick={() => setViewMode('room-matcher')}
+            className="text-[11px] font-mono px-3 py-1.5 rounded-full text-white/70 hover:text-white transition-all cursor-pointer"
+          >
+            ✦ Room Matcher
+          </button>
+          <button
+            onClick={() => setViewMode('mini-engine-showcase')}
+            className="text-[11px] font-mono px-3 py-1.5 rounded-full bg-[#9A5636] text-white font-bold transition-all cursor-pointer"
+          >
+            Mini Engine Embed
+          </button>
+          <button
+            onClick={() => setViewMode('full-app')}
+            className="text-[11px] font-mono px-3 py-1.5 rounded-full text-white/70 hover:text-white transition-all cursor-pointer"
+          >
+            Main Booking Flow
+          </button>
+          <button
+            onClick={() => setViewMode('solo-ride-easy')}
+            className="text-[11px] font-mono px-2.5 py-1.5 rounded-full text-white/50 hover:text-white transition-all cursor-pointer"
+          >
+            Solo Card
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   /**
    * Fail-safe execution wrapper:
@@ -215,12 +340,37 @@ export default function App() {
         currentStep={currentStep}
         onStepChange={handleStepChange}
         canNavigateToStep={canNavigateToStep}
+        onToggleMiniEngine={() => setViewMode('mini-engine-showcase')}
+        isMiniEngineActive={false}
+        onOpenRoomMatcher={() => setViewMode('room-matcher')}
       />
 
       {/* Main View Router */}
       <main className="flex-1">
+        {/* INTERMEDIATE DECISION SCREEN: Match or Browse Choice */}
+        {isMatchPromptActive && (
+          <MatchOrBrowseScreen
+            criteria={criteria}
+            onFindYourStay={() => {
+              setIsMatchPromptActive(false);
+              setViewMode('room-matcher');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onShowAllRooms={() => {
+              setIsMatchPromptActive(false);
+              setCurrentStep(2);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onChangeDates={() => {
+              setIsMatchPromptActive(false);
+              setCurrentStep(1);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        )}
+
         {/* STEP 1: Availability Criteria / Landing */}
-        {currentStep === 1 && (
+        {!isMatchPromptActive && currentStep === 1 && (
           <div className="w-full py-12 md:py-16">
             <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 text-center mb-10">
               <span className="font-woodblock text-xs uppercase tracking-widest text-[#9A5636] font-bold block mb-2">
@@ -239,7 +389,10 @@ export default function App() {
               <SearchBar
                 criteria={criteria}
                 onUpdateCriteria={setCriteria}
-                onSearch={() => handleStepChange(2)}
+                onSearch={() => {
+                  setIsMatchPromptActive(true);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
               />
             </div>
 
@@ -258,7 +411,10 @@ export default function App() {
                   </p>
                 </div>
                 <button
-                  onClick={() => handleStepChange(2)}
+                  onClick={() => {
+                    setIsMatchPromptActive(true);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
                   className="flex items-center gap-2 bg-[#4E332D] hover:bg-[#343833] text-white px-6 py-3 rounded-full font-woodblock text-xs uppercase tracking-widest cursor-pointer shadow-sm transition-transform active:scale-95"
                 >
                   <span>Browse All 8 Rooms</span>
@@ -270,7 +426,10 @@ export default function App() {
                 {BUILDINGS.map((b) => (
                   <div
                     key={b.id}
-                    onClick={() => handleStepChange(2)}
+                    onClick={() => {
+                      setIsMatchPromptActive(true);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
                     className="group cursor-pointer rounded-2xl overflow-hidden border border-[#D1C9BE] bg-white shadow-xs hover:shadow-md transition-all"
                   >
                     <div className="h-44 overflow-hidden relative">
@@ -302,7 +461,7 @@ export default function App() {
         )}
 
         {/* STEP 2: Find Your Stay (Building & Room Experiences) */}
-        {currentStep === 2 && (
+        {!isMatchPromptActive && currentStep === 2 && (
           <BuildingExperienceList
             criteria={criteria}
             onUpdateCriteria={setCriteria}
@@ -373,6 +532,34 @@ export default function App() {
 
       {/* Footer matching Figma */}
       <Footer />
+
+      {/* Floating Quick Mode Switcher */}
+      <div className="fixed bottom-4 right-4 z-50 flex items-center gap-1.5 p-1 bg-[#221C18]/90 text-white rounded-full shadow-2xl backdrop-blur-md border border-white/20">
+        <button
+          onClick={() => setViewMode('room-matcher')}
+          className="text-[11px] font-mono px-3 py-1.5 rounded-full text-white/70 hover:text-white transition-all cursor-pointer"
+        >
+          ✦ Room Matcher
+        </button>
+        <button
+          onClick={() => setViewMode('mini-engine-showcase')}
+          className="text-[11px] font-mono px-3 py-1.5 rounded-full text-white/70 hover:text-white transition-all cursor-pointer"
+        >
+          Mini Engine Embed
+        </button>
+        <button
+          onClick={() => setViewMode('full-app')}
+          className="text-[11px] font-mono px-3 py-1.5 rounded-full bg-[#9A5636] text-white font-bold transition-all cursor-pointer"
+        >
+          Main Booking Flow
+        </button>
+        <button
+          onClick={() => setViewMode('solo-ride-easy')}
+          className="text-[11px] font-mono px-2.5 py-1.5 rounded-full text-white/50 hover:text-white transition-all cursor-pointer"
+        >
+          Solo Card
+        </button>
+      </div>
     </div>
   );
 }
