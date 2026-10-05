@@ -1,6 +1,6 @@
 import React from 'react';
 import { SearchCriteria } from '../types';
-import { Compass, Eye, Sparkles, Calendar, ArrowRight, ArrowLeft, Check, Shield } from 'lucide-react';
+import { Calendar, ArrowLeft } from 'lucide-react';
 
 interface MatchOrBrowseScreenProps {
   criteria: SearchCriteria;
@@ -30,165 +30,124 @@ export const MatchOrBrowseScreen: React.FC<MatchOrBrowseScreenProps> = ({
   };
 
   return (
-    <div className="min-h-[85vh] flex flex-col justify-center items-center py-12 sm:py-20 px-4 sm:px-6 lg:px-8 bg-[#FAF9F9] text-[#1C1917] selection:bg-[#4E332D] selection:text-white animate-in fade-in duration-300">
-      <div className="max-w-[1000px] w-full mx-auto space-y-10 sm:space-y-12">
-        
-        {/* Top Stay Context Chip */}
-        <div className="flex justify-center">
-          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-[#D1C9BE] shadow-2xs text-xs font-mono text-[#4E332D]">
-            <Calendar className="w-3.5 h-3.5 text-[#9A5636]" />
-            <span className="font-semibold">
-              {formatDateDisplay(criteria.checkIn)} – {formatDateDisplay(criteria.checkOut)}
-            </span>
-            <span className="text-[#D1C9BE]" aria-hidden="true">·</span>
-            <span>{criteria.nights} {criteria.nights === 1 ? 'Night' : 'Nights'}</span>
-            <span className="text-[#D1C9BE]" aria-hidden="true">·</span>
-            <span>{criteria.guests} {criteria.guests === 1 ? 'Guest' : 'Guests'}</span>
-            <button
-              type="button"
-              onClick={onChangeDates}
-              className="text-[#9A5636] hover:underline font-woodblock uppercase tracking-wider text-[11px] ml-1 cursor-pointer"
-            >
-              Change
-            </button>
-          </div>
-        </div>
-
-        {/* Hero Editorial Header */}
-        <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <span className="font-woodblock text-xs uppercase tracking-[0.25em] text-[#9A5636] font-bold block">
-            URBAN COWBOY CATSKILLS · YOUR EXPERIENCE
+    <div 
+      className="min-h-screen w-full flex flex-col justify-center items-center py-10 sm:py-16 px-4 sm:px-8 selection:bg-[#4E332D] selection:text-white relative"
+      style={{
+        backgroundColor: '#5C483B',
+        backgroundImage: `
+          repeating-linear-gradient(0deg, rgba(0,0,0,0.14) 0px, rgba(0,0,0,0.14) 1px, transparent 1px, transparent 4px),
+          repeating-linear-gradient(90deg, rgba(0,0,0,0.14) 0px, rgba(0,0,0,0.14) 1px, transparent 1px, transparent 4px),
+          repeating-linear-gradient(45deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 4px)
+        `
+      }}
+    >
+      {/* Top Floating Stay Context Chip */}
+      <div className="mb-6 sm:mb-8 flex items-center justify-center">
+        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#3B2C24]/85 text-[#F2D078] border border-[#2A1D17] text-xs font-mono shadow-md backdrop-blur-xs">
+          <Calendar className="w-3.5 h-3.5 text-[#F5C748]" />
+          <span>
+            {formatDateDisplay(criteria.checkIn)} – {formatDateDisplay(criteria.checkOut)}
           </span>
-
-          <h1 className="font-display font-light text-3xl sm:text-5xl lg:text-6xl text-[#4E332D] tracking-wide uppercase leading-[1.15]">
-            A property with character as big as ours means we have more options than most.
-          </h1>
-
-          <div className="pt-2 space-y-2">
-            <h2 className="font-brothers text-xl sm:text-2xl text-[#1C1917] uppercase tracking-wider font-bold">
-              Would you like us to help find your top options?
-            </h2>
-            <p className="font-sans text-sm sm:text-base text-[#60605E] max-w-xl mx-auto leading-relaxed">
-              Answer a few questions and we'll match you to the right room, or browse everything available.
-            </p>
-          </div>
-        </div>
-
-        {/* Choice Path Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-          
-          {/* Path 1: Room Matcher (Recommended) */}
-          <div 
-            onClick={onFindYourStay}
-            className="group relative bg-white border-2 border-[#4E332D] rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-xl transition-all duration-200 cursor-pointer overflow-hidden ring-1 ring-[#4E332D]/20 hover:scale-[1.01]"
-          >
-            <div className="absolute top-3.5 right-3.5 bg-[#0E301A] text-white px-3 py-1 rounded-full text-[10px] font-woodblock uppercase tracking-wider font-bold flex items-center gap-1 shadow-xs">
-              <Sparkles className="w-3 h-3 text-[#F2AAA9]" />
-              <span>Recommended</span>
-            </div>
-
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-[#EBE8E0]/70 flex items-center justify-center text-[#4E332D] group-hover:scale-110 transition-transform">
-                <Compass className="w-6 h-6 stroke-[2]" />
-              </div>
-
-              <div>
-                <span className="font-woodblock text-[11px] uppercase tracking-wider text-[#9A5636] font-bold block mb-1">
-                  GUIDED MATCHER · 60 SECONDS
-                </span>
-                <h3 className="font-display font-normal text-2xl sm:text-3xl text-[#1C1917] uppercase">
-                  Find Your Stay
-                </h3>
-                <p className="font-sans text-xs sm:text-sm text-[#60605E] mt-2 leading-relaxed">
-                  Tell us who's coming (solo, couple, friends, family), if your pup is tagging along, and your escape focus. We'll reveal your perfect suite.
-                </p>
-              </div>
-
-              <div className="space-y-1.5 pt-2 text-xs font-sans text-[#4E332D]">
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-[#0E301A]" />
-                  <span>Custom narrative explaining why it's your #1 match</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-[#0E301A]" />
-                  <span>Two curated runner-up options side-by-side</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-[#EBE8E0]">
-              <button
-                type="button"
-                onClick={onFindYourStay}
-                className="w-full bg-[#4E332D] group-hover:bg-[#221C18] text-white py-3.5 px-6 rounded-full font-woodblock text-xs uppercase tracking-widest transition-all cursor-pointer flex items-center justify-center gap-2 shadow-md"
-              >
-                <span>Find Your Stay</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
-            </div>
-          </div>
-
-          {/* Path 2: Full Catalog Browse */}
-          <div 
-            onClick={onShowAllRooms}
-            className="group bg-white border-2 border-[#D1C9BE] hover:border-[#4E332D]/60 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:shadow-lg transition-all duration-200 cursor-pointer overflow-hidden hover:scale-[1.01]"
-          >
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-[#FAF9F9] border border-[#EBE8E0] flex items-center justify-center text-[#73716D] group-hover:text-[#4E332D] group-hover:scale-110 transition-all">
-                <Eye className="w-6 h-6 stroke-[2]" />
-              </div>
-
-              <div>
-                <span className="font-woodblock text-[11px] uppercase tracking-wider text-[#73716D] font-bold block mb-1">
-                  SELF-DIRECTED · FULL CATALOG
-                </span>
-                <h3 className="font-display font-normal text-2xl sm:text-3xl text-[#1C1917] uppercase">
-                  No, Show Me All Rooms
-                </h3>
-                <p className="font-sans text-xs sm:text-sm text-[#60605E] mt-2 leading-relaxed">
-                  Browse all 10 soaking suites, historic lodge rooms, and pine cabin hideaways across Alpine Haus, Walden Haus, and The Lodge.
-                </p>
-              </div>
-
-              <div className="space-y-1.5 pt-2 text-xs font-sans text-[#73716D]">
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-[#73716D]" />
-                  <span>Filter by freestanding clawfoot or outdoor cedar tub</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-[#73716D]" />
-                  <span>Compare rates, square footage & building vibes</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-[#EBE8E0]">
-              <button
-                type="button"
-                onClick={onShowAllRooms}
-                className="w-full bg-white group-hover:bg-[#EBE8E0]/60 border-2 border-[#4E332D] text-[#4E332D] py-3.5 px-6 rounded-full font-woodblock text-xs uppercase tracking-widest transition-all cursor-pointer flex items-center justify-center gap-2"
-              >
-                <span>No, Show Me All Rooms</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Back Link */}
-        <div className="text-center pt-2">
+          <span className="text-[#F2D078]/40">·</span>
+          <span>{criteria.nights} {criteria.nights === 1 ? 'Night' : 'Nights'}</span>
+          <span className="text-[#F2D078]/40">·</span>
+          <span>{criteria.guests} {criteria.guests === 1 ? 'Guest' : 'Guests'}</span>
           <button
             type="button"
             onClick={onChangeDates}
-            className="inline-flex items-center gap-1.5 text-xs font-woodblock uppercase tracking-wider text-[#73716D] hover:text-[#4E332D] transition-colors cursor-pointer"
+            className="text-[#F8A8A2] hover:text-white uppercase font-woodblock tracking-wider text-[11px] ml-2 underline cursor-pointer transition-colors"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Return to Date Selection</span>
+            Change
           </button>
+        </div>
+      </div>
+
+      {/* Main Grid: Left Framed Card + Right Action Tickets */}
+      <div className="max-w-[1240px] w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
+        
+        {/* ================= LEFT CARD (DARK SLATE/WOOD) ================= */}
+        <div className="lg:col-span-7 bg-[#544139] border-[3px] border-[#2C1E18] p-8 sm:p-12 lg:p-14 flex flex-col justify-between shadow-2xl relative">
+          
+          {/* Subtle Inner Framing Border */}
+          <div className="absolute inset-2 sm:inset-3 border border-[#3E2D26]/70 pointer-events-none" />
+
+          {/* Top Headline Statement */}
+          <div className="relative z-10 space-y-6 sm:space-y-8">
+            <h2 className="font-desert font-medium text-lg sm:text-2xl text-[#EBD08B] tracking-wide leading-snug">
+              A Place With This Much Character Comes With More Ways to Stay.
+            </h2>
+
+            {/* Main Big Question */}
+            <div className="space-y-1 py-4 sm:py-6">
+              <div className="font-display font-bold text-4xl sm:text-5xl lg:text-[62px] text-[#F5C748] tracking-wider leading-[1.08] uppercase drop-shadow-xs">
+                WANT HELP
+              </div>
+              <div className="font-display font-bold text-4xl sm:text-5xl lg:text-[62px] text-[#F5C748] tracking-wider leading-[1.08] uppercase drop-shadow-xs">
+                FINDING THE
+              </div>
+              <div className="font-display font-bold text-4xl sm:text-5xl lg:text-[62px] text-[#F5C748] tracking-wider leading-[1.08] uppercase drop-shadow-xs">
+                RIGHT ONE?
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Narrative Description */}
+          <div className="relative z-10 pt-6 mt-4 border-t border-[#3E2D26]/80">
+            <p className="font-desert text-sm sm:text-base text-[#EBD08B] leading-relaxed max-w-xl">
+              Tell us a Little About Your Stay and we’ll Point you Toward Your Best Matches, or you can Browse Everything Available.
+            </p>
+          </div>
+
+        </div>
+
+        {/* ================= RIGHT BUTTONS STACK ================= */}
+        <div className="lg:col-span-5 flex flex-col gap-6 sm:gap-8 justify-between">
+          
+          {/* Top Block: Pink "YES" Button (Takes them to Room Matcher) */}
+          <button
+            type="button"
+            onClick={onFindYourStay}
+            aria-label="Yes, help me find the right room"
+            className="flex-1 min-h-[160px] sm:min-h-[190px] bg-[#F8A8A2] hover:bg-[#F99D96] active:bg-[#F28D85] text-[#1C1917] p-8 flex items-center justify-center border-2 border-[#2C1E18] shadow-xl hover:shadow-2xl transition-all duration-200 cursor-pointer group hover:scale-[1.015] active:scale-[0.985]"
+          >
+            <span className="font-display font-bold text-5xl sm:text-6xl lg:text-7xl tracking-wider uppercase text-[#1C1917] group-hover:scale-105 transition-transform duration-200 select-none">
+              YES
+            </span>
+          </button>
+
+          {/* Bottom Block: Yellow "no thanks SHOW ME ALL ROOMS" Button (Takes them to normal all rooms) */}
+          <button
+            type="button"
+            onClick={onShowAllRooms}
+            aria-label="No thanks, show me all rooms"
+            className="flex-1 min-h-[180px] sm:min-h-[220px] bg-[#FEE474] hover:bg-[#FEDF5A] active:bg-[#FBD63F] text-[#1C1917] p-8 flex flex-col items-center justify-center text-center border-2 border-[#2C1E18] shadow-xl hover:shadow-2xl transition-all duration-200 cursor-pointer group hover:scale-[1.015] active:scale-[0.985] space-y-2"
+          >
+            <span className="font-desert lowercase text-xl sm:text-2xl text-[#1C1917] font-normal tracking-wide select-none">
+              no thanks
+            </span>
+            <div className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl uppercase tracking-wider text-[#1C1917] leading-[1.05] group-hover:scale-105 transition-transform duration-200 select-none">
+              SHOW ME
+              <br />
+              ALL ROOMS
+            </div>
+          </button>
+
         </div>
 
       </div>
+
+      {/* Return to Date Selection Back Link */}
+      <div className="mt-8 sm:mt-10">
+        <button
+          type="button"
+          onClick={onChangeDates}
+          className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#EBD08B]/80 hover:text-[#F5C748] transition-colors cursor-pointer"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Return to Date Selection</span>
+        </button>
+      </div>
+
     </div>
   );
 };
